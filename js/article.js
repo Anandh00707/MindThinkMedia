@@ -36,7 +36,7 @@
 ========================================================= */
 
 const BACKEND_ORIGIN =
-    "http://localhost:5000";
+    "https://mindthinkmedia.onrender.com";
 
 const ARTICLE_API_BASE_URL =
     `${BACKEND_ORIGIN}/api/articles`;
