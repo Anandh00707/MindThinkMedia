@@ -37,7 +37,7 @@ requestAnimationFrame(() => {
     ========================================================= */
 
     const BACKEND_ORIGIN =
-        `${window.location.protocol}//${window.location.hostname}:5000`;
+        "https://mindthinkmedia.onrender.com";
 
     const ARTICLES_API_URL =
         `${BACKEND_ORIGIN}/api/articles`;
@@ -266,6 +266,122 @@ requestAnimationFrame(() => {
         });
 
     }
+
+    /* =====================================================
+   DESKTOP NAV — ACTIVE SECTION
+====================================================== */
+
+const desktopNavLinks =
+    document.querySelectorAll(".desktop-nav a");
+
+const desktopSections = [
+    {
+        id: "top",
+        nav: document.querySelector(
+            '.desktop-nav a[href="#top"]'
+        )
+    },
+    {
+        id: "latest",
+        nav: document.querySelector(
+            '.desktop-nav a[href="#latest"]'
+        )
+    },
+    {
+        id: "categories",
+        nav: document.querySelector(
+            '.desktop-nav a[href="#categories"]'
+        )
+    },
+    {
+        id: "about",
+        nav: document.querySelector(
+            '.desktop-nav a[href="#about"]'
+        )
+    },
+    {
+        id: "contact",
+        nav: document.querySelector(
+            '.desktop-nav a[href="#contact"]'
+        )
+    }
+];
+
+
+/* CLICK ACTIVE STATE */
+
+desktopNavLinks.forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        desktopNavLinks.forEach(navLink => {
+            navLink.classList.remove("active");
+        });
+
+        link.classList.add("active");
+
+    });
+
+});
+
+
+/* SCROLL ACTIVE STATE */
+
+if ("IntersectionObserver" in window) {
+
+    const desktopSectionObserver =
+        new IntersectionObserver(
+            entries => {
+
+                entries.forEach(entry => {
+
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+
+                    const activeSection =
+                        desktopSections.find(
+                            section =>
+                                section.id ===
+                                entry.target.id
+                        );
+
+                    if (!activeSection) {
+                        return;
+                    }
+
+                    desktopNavLinks.forEach(link => {
+                        link.classList.remove("active");
+                    });
+
+                    if (activeSection.nav) {
+                        activeSection.nav.classList.add(
+                            "active"
+                        );
+                    }
+
+                });
+
+            },
+            {
+                rootMargin: "-25% 0px -60% 0px",
+                threshold: 0
+            }
+        );
+
+
+    desktopSections.forEach(section => {
+
+        const element =
+            document.getElementById(section.id);
+
+        if (element) {
+            desktopSectionObserver.observe(element);
+        }
+
+    });
+
+   }    
 
 
     /* =====================================================

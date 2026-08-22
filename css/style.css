@@ -4823,6 +4823,7 @@ body::before {
 }
 
 .featured-image {
+    aspect-ratio: 16 / 9;
     min-height: 520px;
     overflow: hidden;
 }
@@ -4831,10 +4832,11 @@ body::before {
     width: 100%;
     height: 100%;
 
-    object-fit: contain !important;
-    object-position: center;
+    object-fit: cover;
+    object-position: center 46%;
 
     background: #08111c;
+    display: block;
 
     transition:
         transform 1.2s var(--luxury-ease),
