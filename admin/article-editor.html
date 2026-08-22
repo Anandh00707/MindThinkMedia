@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="robots"
+        content="noindex, nofollow"
+    >
+
+    <title>
+        Article Editor — MindThinkMedia Admin
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="./css/admin.css"
+    >
+
+</head>
+
+
+<body class="admin-editor-page">
+
+
+    <!-- =====================================================
+         ADMIN HEADER
+    ====================================================== -->
+
+    <header class="admin-header">
+
+        <div class="admin-header-inner">
+
+            <a
+                href="./dashboard.html"
+                class="admin-brand"
+            >
+
+                <span
+                    class="admin-logo"
+                    aria-hidden="true"
+                >
+                    M
+                </span>
+
+                <span>
+
+                    <strong>
+                        MindThinkMedia
+                    </strong>
+
+                    <small>
+                        Admin
+                    </small>
+
+                </span>
+
+            </a>
+
+
+            <div class="admin-header-actions">
+
+                <a
+                    href="./dashboard.html"
+                    class="secondary-button"
+                >
+                    ← Dashboard
+                </a>
+
+                <button
+                    type="button"
+                    id="logoutButton"
+                    class="logout-button"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="admin-main">
+
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <section class="editor-page-header">
+
+            <div>
+
+                <p class="admin-eyebrow">
+                    ARTICLE MANAGEMENT
+                </p>
+
+                <h1 id="editorHeading">
+                    Create Article
+                </h1>
+
+                <p id="editorDescription">
+                    Write, optimize and publish a new MindThinkMedia article.
+                </p>
+
+            </div>
+
+
+            <div class="editor-header-actions">
+
+                <button
+                    type="button"
+                    id="previewButton"
+                    class="preview-button"
+                    disabled
+                >
+                    Preview
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MESSAGE
+        ================================================== -->
+
+        <div
+            id="editorMessage"
+            class="editor-message"
+            hidden
+            role="status"
+            aria-live="polite"
+        ></div>
+
+
+        <!-- =================================================
+             ARTICLE FORM
+        ================================================== -->
+
+        <form
+            id="articleForm"
+            novalidate
+        >
+
+
+            <div class="editor-layout">
+
+
+                <!-- =========================================
+                     MAIN COLUMN
+                ========================================== -->
+
+                <div class="editor-main-column">
+
+
+                    <!-- =====================================
+                         ARTICLE DETAILS
+                    ====================================== -->
+
+                    <section class="admin-card">
+
+                        <div class="admin-card-header">
+
+                            <p class="admin-eyebrow">
+                                CONTENT
+                            </p>
+
+                            <h2>
+                                Article Details
+                            </h2>
+
+                        </div>
+
+
+                        <div class="admin-card-body">
+
+
+                            <div class="admin-form-group">
+
+                                <label for="articleTitle">
+                                    Title
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="articleTitle"
+                                    name="title"
+                                    maxlength="255"
+                                    placeholder="Enter article title"
+                                    required
+                                >
+
+                                <small class="admin-form-help">
+                                    Use a clear, useful title for readers.
+                                </small>
+
+                            </div>
+
+
+                            <div class="admin-form-group">
+
+                                <label for="articleSlug">
+                                    Slug
+                                </label>
+
+                                <div class="slug-field">
+
+                                    <input
+                                        type="text"
+                                        id="articleSlug"
+                                        name="slug"
+                                        maxlength="255"
+                                        placeholder="article-url-slug"
+                                        required
+                                    >
+
+                                    <button
+                                        type="button"
+                                        id="generateSlugButton"
+                                        class="slug-generate-button"
+                                    >
+                                        Generate
+                                    </button>
+
+                                </div>
+
+                                <small class="admin-form-help">
+                                    Used in the public article URL.
+                                </small>
+
+                            </div>
+
+
+                            <div class="admin-form-group">
+
+                                <label for="articleCategory">
+                                    Category
+                                </label>
+
+                                <select
+                                    id="articleCategory"
+                                    name="category"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select category
+                                    </option>
+
+                                    <option value="AI & Technology">
+                                        AI & Technology
+                                    </option>
+
+                                    <option value="Finance">
+                                        Finance
+                                    </option>
+
+                                    <option value="Health & Wellness">
+                                        Health & Wellness
+                                    </option>
+
+                                    <option value="Psychology">
+                                        Psychology
+                                    </option>
+
+                                    <option value="Life Lessons">
+                                        Life Lessons
+                                    </option>
+
+                                    <option value="Books">
+                                        Books
+                                    </option>
+
+                                    <option value="Movies">
+                                        Movies
+                                    </option>
+
+                                    <option value="Stories">
+                                        Stories
+                                    </option>
+
+                                    <option value="Students">
+                                        Students
+                                    </option>
+
+                                    <option value="Lifestyle">
+                                        Lifestyle
+                                    </option>
+
+                                    <option value="Ideas & Discussions">
+                                        Ideas & Discussions
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="admin-form-group">
+
+                                <label for="articleAuthor">
+                                    Author
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="articleAuthor"
+                                    name="author"
+                                    maxlength="100"
+                                    value="MindThinkMedia"
+                                >
+
+                            </div>
+
+
+                            <div class="admin-form-group">
+
+                                <label for="articleExcerpt">
+                                    Excerpt
+                                </label>
+
+                                <textarea
+                                    id="articleExcerpt"
+                                    name="excerpt"
+                                    rows="4"
+                                    placeholder="Write a short summary of the article"
+                                    required
+                                ></textarea>
+
+                                <small class="admin-form-help">
+                                    This appears on article cards and may be used for SEO.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =====================================
+                         CONTENT EDITOR
+                    ====================================== -->
+
+                    <section class="admin-card editor-content-card">
+
+                        <div class="admin-card-header">
+
+                            <p class="admin-eyebrow">
+                                ARTICLE
+                            </p>
+
+                            <h2>
+                                Content
+                            </h2>
+
+                        </div>
+
+
+                        <div
+                            class="editor-toolbar editor-toolbar-universal"
+                            aria-label="Article content tools"
+                        >
+
+                            <div class="editor-toolbar-group">
+
+                                <span class="editor-toolbar-label">
+                                    Writing
+                                </span>
+
+                                <div class="editor-toolbar-actions">
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool"
+                                        data-tag="h2"
+                                        title="Section heading"
+                                    >
+                                        H2
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool"
+                                        data-tag="h3"
+                                        title="Subheading"
+                                    >
+                                        H3
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool"
+                                        data-tag="p"
+                                        title="Paragraph"
+                                    >
+                                        Paragraph
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool"
+                                        data-tag="strong"
+                                        title="Bold text"
+                                    >
+                                        Bold
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool"
+                                        data-tag="blockquote"
+                                        title="Quote"
+                                    >
+                                        Quote
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool"
+                                        data-tag="ul"
+                                        title="Bullet list"
+                                    >
+                                        List
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <div class="editor-toolbar-group">
+
+                                <span class="editor-toolbar-label">
+                                    Universal Blocks
+                                </span>
+
+                                <div class="editor-toolbar-actions">
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool editor-block-tool"
+                                        data-block="takeaway"
+                                        title="Insert a key takeaway"
+                                    >
+                                        ✦ Takeaway
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool editor-block-tool"
+                                        data-block="note"
+                                        title="Insert an important note"
+                                    >
+                                        Note
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <textarea
+                            id="articleContent"
+                            name="content"
+                            class="article-content-editor"
+                            spellcheck="true"
+                            placeholder="<p>Write your article here...</p>"
+                            required
+                        ></textarea>
+
+                        <div class="admin-card-body">
+
+                            <div class="editor-content-help">
+
+                                <strong>
+                                    Universal Article Editor
+                                </strong>
+
+                                <p>
+                                    Use the writing tools for normal article content.
+                                    Takeaway and Note insert structured blocks that
+                                    automatically receive the MindThinkMedia editorial
+                                    design on the public article page.
+                                </p>
+
+                                <small>
+                                    Content is still stored as clean HTML in PostgreSQL,
+                                    so the existing create, edit, draft and publish
+                                    lifecycle remains unchanged.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =====================================
+                         SEO
+                    ====================================== -->
+
+                    <section class="admin-card">
+
+                        <div class="admin-card-header">
+
+                            <p class="admin-eyebrow">
+                                SEARCH
+                            </p>
+
+                            <h2>
+                                SEO
+                            </h2>
+
+                        </div>
+
+
+                        <div class="admin-card-body">
+
+
+                            <div class="admin-form-group">
+
+                                <label for="seoTitle">
+                                    SEO Title
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="seoTitle"
+                                    name="seo_title"
+                                    maxlength="255"
+                                    placeholder="SEO title"
+                                >
+
+                                <small class="admin-form-help">
+                                    Leave blank to use the article title.
+                                </small>
+
+                            </div>
+
+
+                            <div class="admin-form-group">
+
+                                <label for="seoDescription">
+                                    SEO Description
+                                </label>
+
+                                <textarea
+                                    id="seoDescription"
+                                    name="seo_description"
+                                    rows="4"
+                                    placeholder="Write a concise search description"
+                                ></textarea>
+
+                                <div class="seo-counter">
+
+                                    <span id="seoDescriptionCount">
+                                        0 characters
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+
+                <!-- =========================================
+                     SIDEBAR
+                ========================================== -->
+
+                <aside class="editor-sidebar">
+
+
+                    <!-- =====================================
+                         PUBLISHING
+                    ====================================== -->
+
+                    <section class="admin-card editor-sticky-card">
+
+                        <div class="admin-card-header">
+
+                            <p class="admin-eyebrow">
+                                STATUS
+                            </p>
+
+                            <h2>
+                                Publishing
+                            </h2>
+
+                        </div>
+
+
+                        <div class="admin-card-body">
+
+
+                            <div class="editor-status-row">
+
+                                <span class="editor-status-label">
+                                    Current status
+                                </span>
+
+                                <strong
+                                    id="currentStatus"
+                                    class="editor-status-value status-draft"
+                                >
+                                    Draft
+                                </strong>
+
+                            </div>
+
+
+                            <div class="admin-form-group">
+
+                                <div class="editor-checkbox">
+
+                                    <input
+                                        type="checkbox"
+                                        id="articleFeatured"
+                                        name="featured"
+                                    >
+
+                                    <div>
+
+                                        <label for="articleFeatured">
+                                            Feature this article
+                                        </label>
+
+                                        <small>
+                                            Highlight this article where featured content is shown.
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="editor-action-stack">
+
+                                <button
+                                    type="button"
+                                    id="saveDraftButton"
+                                    class="secondary-button"
+                                >
+                                    Save Draft
+                                </button>
+
+                                <button
+                                    type="button"
+                                    id="publishButton"
+                                    class="primary-button"
+                                >
+                                    Publish Article
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =====================================
+                         FEATURED IMAGE
+                    ====================================== -->
+
+                    <section class="admin-card">
+
+                        <div class="admin-card-header">
+
+                            <p class="admin-eyebrow">
+                                MEDIA
+                            </p>
+
+                            <h2>
+                                Featured Image
+                            </h2>
+
+                        </div>
+
+
+                        <div class="admin-card-body">
+
+
+                            <div
+                                id="imagePreview"
+                                class="editor-image-preview"
+                                hidden
+                            >
+
+                                <img
+                                    id="imagePreviewElement"
+                                    alt=""
+                                >
+
+                            </div>
+
+
+                            <div class="admin-form-group">
+
+                                <label for="featuredImageInput">
+                                    Image
+                                </label>
+
+                                <input
+                                    type="file"
+                                    id="featuredImageInput"
+                                    accept="image/jpeg,image/png,image/webp"
+                                >
+
+                                <small class="admin-form-help">
+                                    Upload a JPG, PNG or WebP featured image.
+                                    The image is stored by MindThinkMedia and used on the public article page.
+                                </small>
+
+                            </div>
+
+
+                            <div class="admin-form-group">
+
+                                <label for="featuredImageUrl">
+                                    Current Image URL
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="featuredImageUrl"
+                                    name="featured_image"
+                                    placeholder="Image URL"
+                                    readonly
+                                >
+
+                            </div>
+
+
+                            <div class="admin-form-group">
+
+                                <label for="imageAlt">
+                                    Image Alt Text
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="imageAlt"
+                                    name="image_alt"
+                                    maxlength="255"
+                                    placeholder="Describe the image"
+                                >
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                id="removeImageButton"
+                                class="secondary-button"
+                                hidden
+                            >
+                                Remove Image
+                            </button>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =====================================
+                         ARTICLE INFORMATION
+                    ====================================== -->
+
+                    <section
+                        id="articleInfoCard"
+                        class="admin-card"
+                        hidden
+                    >
+
+                        <div class="admin-card-header">
+
+                            <p class="admin-eyebrow">
+                                INFORMATION
+                            </p>
+
+                            <h2>
+                                Article
+                            </h2>
+
+                        </div>
+
+
+                        <div class="admin-card-body">
+
+                            <dl class="editor-info-list">
+
+                                <div>
+
+                                    <dt>
+                                        Article ID
+                                    </dt>
+
+                                    <dd id="articleIdValue">
+                                        —
+                                    </dd>
+
+                                </div>
+
+
+                                <div>
+
+                                    <dt>
+                                        Created
+                                    </dt>
+
+                                    <dd id="articleCreatedValue">
+                                        —
+                                    </dd>
+
+                                </div>
+
+
+                                <div>
+
+                                    <dt>
+                                        Updated
+                                    </dt>
+
+                                    <dd id="articleUpdatedValue">
+                                        —
+                                    </dd>
+
+                                </div>
+
+
+                                <div>
+
+                                    <dt>
+                                        Published
+                                    </dt>
+
+                                    <dd id="articlePublishedValue">
+                                        —
+                                    </dd>
+
+                                </div>
+
+                            </dl>
+
+                        </div>
+
+                    </section>
+
+                </aside>
+
+            </div>
+
+
+            <!-- =============================================
+                 HIDDEN STATUS
+            ============================================== -->
+
+            <input
+                type="hidden"
+                id="articleStatus"
+                name="status"
+                value="draft"
+            >
+
+        </form>
+
+    </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+
+    <script src="./js/article-editor.js"></script>
+
+
+</body>
+
+</html>

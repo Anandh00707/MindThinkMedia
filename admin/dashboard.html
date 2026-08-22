@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="robots"
+        content="noindex, nofollow"
+    >
+
+    <title>Dashboard — MindThinkMedia</title>
+
+    <link
+        rel="stylesheet"
+        href="./css/admin.css"
+    >
+
+</head>
+
+
+<body class="admin-dashboard-page">
+
+    <!-- ========================================================
+         ADMIN HEADER
+         ======================================================== -->
+
+    <header class="admin-header">
+
+        <div class="admin-header-inner">
+
+            <a
+                href="./dashboard.html"
+                class="admin-brand"
+            >
+
+                <span
+                    class="admin-logo"
+                    aria-hidden="true"
+                >
+                    M
+                </span>
+
+                <span>
+
+                    <strong>
+                        MindThinkMedia
+                    </strong>
+
+                    <small>
+                        Admin
+                    </small>
+
+                </span>
+
+            </a>
+
+
+            <div class="admin-header-actions">
+
+                <span
+                    id="adminEmail"
+                    class="admin-email"
+                >
+                    Loading...
+                </span>
+
+                <button
+                    type="button"
+                    id="logoutButton"
+                    class="logout-button"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ========================================================
+         MAIN
+         ======================================================== -->
+
+    <main class="admin-main">
+
+        <!-- ====================================================
+             PAGE HEADER
+             ==================================================== -->
+
+        <section class="admin-page-header">
+
+            <div>
+
+                <p class="admin-eyebrow">
+                    CONTENT MANAGEMENT SYSTEM
+                </p>
+
+                <h1>
+                    Dashboard
+                </h1>
+
+                <p>
+                    Manage and publish your MindThinkMedia articles.
+                </p>
+
+            </div>
+
+
+            <a
+                href="./article-editor.html"
+                class="primary-button"
+            >
+                + New Article
+            </a>
+
+        </section>
+
+
+        <!-- ====================================================
+             MESSAGE
+             ==================================================== -->
+
+        <div
+            id="dashboardMessage"
+            class="dashboard-message"
+            role="alert"
+            aria-live="polite"
+        ></div>
+
+
+        <!-- ====================================================
+             STATISTICS
+             ==================================================== -->
+
+        <section
+            class="dashboard-stats"
+            aria-label="Article statistics"
+        >
+
+            <article class="stat-card">
+
+                <div class="stat-card-label">
+                    Total Articles
+                </div>
+
+                <div
+                    id="totalArticles"
+                    class="stat-card-value"
+                >
+                    0
+                </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <div class="stat-card-label">
+                    Published
+                </div>
+
+                <div
+                    id="publishedArticles"
+                    class="stat-card-value"
+                >
+                    0
+                </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <div class="stat-card-label">
+                    Drafts
+                </div>
+
+                <div
+                    id="draftArticles"
+                    class="stat-card-value"
+                >
+                    0
+                </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <div class="stat-card-label">
+                    Unpublished
+                </div>
+
+                <div
+                    id="unpublishedArticles"
+                    class="stat-card-value"
+                >
+                    0
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- ====================================================
+             ARTICLE MANAGEMENT
+             ==================================================== -->
+
+        <section class="articles-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        Articles
+                    </h2>
+
+                    <p>
+                        Create, edit, publish, unpublish, or delete
+                        your articles.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="./article-editor.html"
+                    class="secondary-button"
+                >
+                    Create Article
+                </a>
+
+            </div>
+
+
+            <!-- ==================================================
+                 ARTICLE TABLE
+                 ================================================== -->
+
+            <div class="table-container">
+
+                <table class="articles-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Title
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Updated
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="articlesTableBody">
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="table-loading"
+                            >
+                                Loading articles...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ========================================================
+         DASHBOARD JAVASCRIPT
+         ======================================================== -->
+
+    <script src="./js/dashboard.js"></script>
+
+</body>
+
+</html>
