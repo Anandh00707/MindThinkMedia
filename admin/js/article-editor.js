@@ -34,7 +34,7 @@
 ========================================================= */
 
 const API_BASE_URL =
-    `${window.location.protocol}//${window.location.hostname}:5000/api`;
+    "https://mindthinkmedia.onrender.com/api";
 
 
 const ARTICLE_API_URL =
