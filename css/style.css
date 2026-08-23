@@ -5630,3 +5630,158 @@ body.page-leaving .page-transition-mark {
     }
 
 }
+
+/* ========================================
+   UNIVERSAL FEATURED ARTICLE LAYOUT
+   Works with short + long CMS titles
+======================================== */
+
+.featured-card {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 0.95fr)
+        minmax(0, 1.05fr);
+
+    min-height: 560px;
+
+    align-items: stretch;
+}
+
+
+/* Image always fills the complete left side */
+
+.featured-card .featured-image {
+    width: 100%;
+    height: 100%;
+    min-height: 560px;
+
+    aspect-ratio: auto;
+
+    overflow: hidden;
+}
+
+
+.featured-card .featured-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    display: block;
+}
+
+
+/* Right side */
+
+.featured-card .featured-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    min-width: 0;
+
+    padding:
+        clamp(38px, 4.5vw, 64px);
+}
+
+
+/* Prevent long CMS titles from destroying the card */
+
+.featured-card .featured-content h3 {
+    width: 100%;
+    max-width: 620px;
+
+    margin:
+        20px 0 18px;
+
+    font-size:
+        clamp(36px, 3.8vw, 54px);
+
+    line-height: 1.02;
+
+    letter-spacing: -0.035em;
+
+    text-wrap: balance;
+}
+
+
+/* Excerpt */
+
+.featured-card .featured-content > p {
+    max-width: 590px;
+
+    margin-top: 0;
+
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+
+/* Meta stays above button */
+
+.featured-card .post-meta {
+    margin-top: 22px;
+}
+
+
+/* Button stays neatly at the bottom */
+
+.featured-card .read-button {
+    margin-top: auto;
+
+    padding-top: 28px;
+
+    flex-shrink: 0;
+}
+
+@media (max-width: 1050px) {
+
+    .featured-card {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-card .featured-image {
+        height: 420px;
+        min-height: 420px;
+    }
+
+    .featured-card .featured-content h3 {
+        font-size:
+            clamp(36px, 6vw, 48px);
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .featured-card .featured-image {
+        height: 285px;
+        min-height: 285px;
+    }
+
+    .featured-card .featured-content {
+        padding:
+            32px 25px 36px;
+    }
+
+    .featured-card .featured-content h3 {
+        font-size: 36px;
+        line-height: 1.05;
+    }
+
+    .featured-card .read-button {
+        margin-top: 26px;
+        padding-top: 0;
+    }
+}
+
+
+@media (max-width: 420px) {
+
+    .featured-card .featured-content h3 {
+        font-size: 31px;
+    }
+
+}
