@@ -5729,10 +5729,6 @@ body.page-leaving .page-transition-mark {
 /* Button stays neatly at the bottom */
 
 .featured-card .read-button {
-    margin-top: auto;
-
-    padding-top: 28px;
-
     flex-shrink: 0;
 }
 
@@ -5784,4 +5780,50 @@ body.page-leaving .page-transition-mark {
         font-size: 31px;
     }
 
+}
+
+/* ========================================
+   FEATURED READ BUTTON REFINEMENT
+======================================== */
+
+.featured-card .read-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    min-width: 180px;
+    min-height: 52px;
+
+    margin-top: 30px;
+    padding: 0 22px;
+
+    border: 1px solid rgba(225, 199, 156, 0.32);
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.045);
+
+    color: #fff8ec;
+
+    font-size: 12px;
+    font-weight: 750;
+
+    letter-spacing: 0.25px;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
+}
+
+
+.featured-card .read-button:hover {
+    transform: translateY(-2px);
+
+    background: rgba(225, 199, 156, 0.11);
+
+    border-color: rgba(225, 199, 156, 0.52);
 }
