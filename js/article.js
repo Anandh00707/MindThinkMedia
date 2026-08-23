@@ -422,14 +422,15 @@ document.addEventListener(
 
 
         /* =====================================================
-           ARTICLE CONTENT
+         ARTICLE CONTENT
         ===================================================== */
 
         if (articleContent) {
-
             articleContent.innerHTML =
-                article.content || "";
-
+            renderArticleContent(
+            article.content
+          );
+      
         }
 
 
@@ -987,6 +988,398 @@ function calculateReadTime(
 
 }
 
+/* =========================================================
+   RENDER ARTICLE CONTENT
+
+   Supports:
+   - Existing HTML articles
+   - Markdown-style headings
+   - Paragraphs
+   - Blockquotes
+   - Bullet lists
+   - Numbered lists
+   - Bold / italic / inline code
+========================================================= */
+
+function renderArticleContent(content) {
+
+    if (!content) {
+        return "";
+    }
+
+
+    const source =
+        String(content).trim();
+
+
+    if (!source) {
+        return "";
+    }
+
+
+    /*
+        Existing CMS articles may already contain proper HTML
+        such as <h2>, <p>, <ul>, etc.
+
+        Do not convert those articles again.
+    */
+
+    const containsStructuredHTML =
+        /<(p|h[1-6]|ul|ol|li|blockquote|pre|figure|table|div)\b/i
+            .test(source);
+
+
+    if (containsStructuredHTML) {
+        return source;
+    }
+
+
+    /*
+        Otherwise treat the content as simple Markdown.
+    */
+
+    return convertMarkdownToArticleHTML(
+        source
+    );
+
+}
+
+
+
+/* =========================================================
+   SIMPLE MARKDOWN → ARTICLE HTML
+========================================================= */
+
+function convertMarkdownToArticleHTML(markdown) {
+
+    const lines =
+        String(markdown)
+            .replace(/\r\n/g, "\n")
+            .replace(/\r/g, "\n")
+            .split("\n");
+
+
+    const html = [];
+
+    let paragraphLines = [];
+
+    let listType = null;
+
+
+
+    /* -----------------------------------------------------
+       INLINE FORMATTING
+    ----------------------------------------------------- */
+
+    function formatInline(text) {
+
+        let safe =
+            escapeHTML(
+                String(text || "")
+            );
+
+
+        /* inline code */
+
+        safe =
+            safe.replace(
+                /`([^`]+)`/g,
+                "<code>$1</code>"
+            );
+
+
+        /* bold */
+
+        safe =
+            safe.replace(
+                /\*\*(.+?)\*\*/g,
+                "<strong>$1</strong>"
+            );
+
+
+        /* italic */
+
+        safe =
+            safe.replace(
+                /\*([^*]+)\*/g,
+                "<em>$1</em>"
+            );
+
+
+        return safe;
+    }
+
+
+
+    /* -----------------------------------------------------
+       CLOSE PARAGRAPH
+    ----------------------------------------------------- */
+
+    function flushParagraph() {
+
+        if (!paragraphLines.length) {
+            return;
+        }
+
+
+        const paragraph =
+            paragraphLines
+                .join(" ")
+                .trim();
+
+
+        if (paragraph) {
+
+            html.push(
+                `<p>${formatInline(paragraph)}</p>`
+            );
+
+        }
+
+
+        paragraphLines = [];
+    }
+
+
+
+    /* -----------------------------------------------------
+       CLOSE LIST
+    ----------------------------------------------------- */
+
+    function closeList() {
+
+        if (!listType) {
+            return;
+        }
+
+
+        html.push(
+            `</${listType}>`
+        );
+
+
+        listType = null;
+    }
+
+
+
+    /* -----------------------------------------------------
+       PROCESS EACH LINE
+    ----------------------------------------------------- */
+
+    lines.forEach(rawLine => {
+
+        const line =
+            rawLine.trim();
+
+
+        /* EMPTY LINE */
+
+        if (!line) {
+
+            flushParagraph();
+
+            closeList();
+
+            return;
+        }
+
+
+
+        /* H3 */
+
+        if (/^###\s+/.test(line)) {
+
+            flushParagraph();
+
+            closeList();
+
+
+            html.push(
+                `<h3>${formatInline(
+                    line.replace(
+                        /^###\s+/,
+                        ""
+                    )
+                )}</h3>`
+            );
+
+
+            return;
+        }
+
+
+
+        /* H2 */
+
+        if (/^##\s+/.test(line)) {
+
+            flushParagraph();
+
+            closeList();
+
+
+            html.push(
+                `<h2>${formatInline(
+                    line.replace(
+                        /^##\s+/,
+                        ""
+                    )
+                )}</h2>`
+            );
+
+
+            return;
+        }
+
+
+
+        /*
+            A Markdown # heading becomes h2 because
+            the article title is already the page's h1.
+        */
+
+        if (/^#\s+/.test(line)) {
+
+            flushParagraph();
+
+            closeList();
+
+
+            html.push(
+                `<h2>${formatInline(
+                    line.replace(
+                        /^#\s+/,
+                        ""
+                    )
+                )}</h2>`
+            );
+
+
+            return;
+        }
+
+
+
+        /* BLOCKQUOTE */
+
+        if (/^>\s?/.test(line)) {
+
+            flushParagraph();
+
+            closeList();
+
+
+            html.push(
+                `<blockquote>${formatInline(
+                    line.replace(
+                        /^>\s?/,
+                        ""
+                    )
+                )}</blockquote>`
+            );
+
+
+            return;
+        }
+
+
+
+        /* BULLET LIST */
+
+        if (/^[-*]\s+/.test(line)) {
+
+            flushParagraph();
+
+
+            if (listType !== "ul") {
+
+                closeList();
+
+                html.push("<ul>");
+
+                listType = "ul";
+
+            }
+
+
+            html.push(
+                `<li>${formatInline(
+                    line.replace(
+                        /^[-*]\s+/,
+                        ""
+                    )
+                )}</li>`
+            );
+
+
+            return;
+        }
+
+
+
+        /* NUMBERED LIST */
+
+        if (/^\d+\.\s+/.test(line)) {
+
+            flushParagraph();
+
+
+            if (listType !== "ol") {
+
+                closeList();
+
+                html.push("<ol>");
+
+                listType = "ol";
+
+            }
+
+
+            html.push(
+                `<li>${formatInline(
+                    line.replace(
+                        /^\d+\.\s+/,
+                        ""
+                    )
+                )}</li>`
+            );
+
+
+            return;
+        }
+
+
+
+        /*
+            NORMAL TEXT
+
+            Consecutive text lines belong to the same
+            paragraph until a blank line or heading appears.
+        */
+
+        closeList();
+
+        paragraphLines.push(
+            line
+        );
+
+    });
+
+
+
+    /* -----------------------------------------------------
+       FINISH REMAINING CONTENT
+    ----------------------------------------------------- */
+
+    flushParagraph();
+
+    closeList();
+
+
+    return html.join("\n");
+
+}
 
 /* =========================================================
    RENDER CONCLUSION

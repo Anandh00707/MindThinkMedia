@@ -1395,7 +1395,29 @@ loadHomepageArticles();
         document.getElementById(
             "contactStatus"
         );
+    
+    function showContactToast(message, type) {
 
+    if (!contactStatus) return;
+
+    contactStatus.textContent = message;
+
+    contactStatus.className =
+        `contact-status toast ${type} show`;
+
+    clearTimeout(
+        contactStatus.hideTimer
+    );
+
+    contactStatus.hideTimer =
+        setTimeout(() => {
+
+            contactStatus.classList.remove(
+                "show"
+            );
+
+        }, 3500);
+}
 
     if (contactForm) {
 
@@ -1427,6 +1449,7 @@ loadHomepageArticles();
                 "BwRGCwgSm8y3ZtGwJ"
         });
 
+        
 
         /* ---------------------------------------------
            FORM SUBMISSION
@@ -1449,18 +1472,6 @@ loadHomepageArticles();
 
                 }
 
-
-                if (contactStatus) {
-
-                    contactStatus.textContent =
-                        "";
-
-                    contactStatus.className =
-                        "contact-status";
-
-                }
-
-
                 try {
 
                     await emailjs.sendForm(
@@ -1472,16 +1483,10 @@ loadHomepageArticles();
 
                     /* SUCCESS */
 
-                    if (contactStatus) {
-
-                        contactStatus.textContent =
-                            "Message sent successfully. Thank you for contacting us!";
-
-                        contactStatus.classList.add(
-                            "success"
-                        );
-
-                    }
+                    showContactToast(
+                       "✓ Message sent successfully. Thank you!",
+                        "success"
+                     );
 
 
                     contactForm.reset();
@@ -1494,18 +1499,11 @@ loadHomepageArticles();
                         error
                     );
 
-
-                    if (contactStatus) {
-
-                        contactStatus.textContent =
-                            "Something went wrong. Please try again later.";
-
-                        contactStatus.classList.add(
-                            "error"
-                        );
-
-                    }
-
+                    showContactToast(
+                        "Something went wrong. Please try again later.",
+                        "error"
+                    );
+                   
                 } finally {
 
                     if (contactSubmit) {
