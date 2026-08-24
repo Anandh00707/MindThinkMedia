@@ -4,32 +4,31 @@
 // PostgreSQL + Node.js
 // ============================================================
 
-const { Pool } = require("pg");
+
 
 
 // ============================================================
 // DATABASE POOL
 // ============================================================
 
+const { Pool } = require("pg");
+
 const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
 
-    connectionString:
-        process.env.DATABASE_URL,
+    max: 5,
 
-    // Keep the pool small for the deployed application.
-    max:
-        5,
+    idleTimeoutMillis: 10000,
 
-    // Close unused connections after 30 seconds.
-    idleTimeoutMillis:
-        30000,
+    connectionTimeoutMillis: 20000,
 
-    // Give hosted PostgreSQL more time to establish
-    // a new connection.
-    connectionTimeoutMillis:
-        15000
+    keepAlive: true,
 
+    keepAliveInitialDelayMillis: 10000,
+
+    allowExitOnIdle: false
 });
+
 
 
 // ============================================================
@@ -71,6 +70,7 @@ const query = (
     );
 
 };
+
 
 
 // ============================================================
