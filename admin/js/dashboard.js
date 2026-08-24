@@ -395,6 +395,11 @@ function updateStatistics(
                 ) === "draft"
         ).length;
 
+    const featured =
+        articles.filter(
+        article =>
+            article.featured === true
+    ).length;    
 
     /*
         Current backend uses only:
@@ -407,15 +412,6 @@ function updateStatistics(
         Therefore there is currently no separate
         "unpublished" database status.
     */
-
-    const unpublished =
-        articles.filter(
-            article =>
-                normalizeStatus(
-                    article.status
-                ) === "unpublished"
-        ).length;
-
 
     if (totalArticles) {
         totalArticles.textContent =
@@ -434,7 +430,7 @@ function updateStatistics(
 
     if (unpublishedArticles) {
         unpublishedArticles.textContent =
-            unpublished;
+        featured;
     }
 }
 

@@ -634,6 +634,86 @@
 
 }
 
+/* =========================================================
+   INLINE ARTICLE IMAGES
+   Images inserted through the CMS content editor
+========================================================= */
+
+.article-content .article-inline-image {
+
+    width: 100%;
+
+    margin:
+        2.8rem
+        0;
+
+}
+
+
+.article-content .article-inline-image img {
+
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    margin: 0;
+
+    border-radius: 6px;
+
+    object-fit: cover;
+
+}
+
+
+.article-content .article-inline-image figcaption {
+
+    max-width: 92%;
+
+    margin:
+        11px
+        auto
+        0;
+
+    font-family: var(--mtm-mono);
+
+    font-size: 0.72rem;
+
+    line-height: 1.6;
+
+    letter-spacing: 0.01em;
+
+    text-align: center;
+
+    color: var(--mtm-ink-soft);
+
+}
+
+.article-content .article-inline-image {
+
+    margin:
+        2.2rem
+        0;
+
+}
+
+
+.article-content .article-inline-image figcaption {
+
+    max-width: 100%;
+
+    margin-top: 9px;
+
+    padding:
+        0
+        4px;
+
+    font-size: 0.68rem;
+
+    line-height: 1.55;
+
+}
 
 .article-content table {
 

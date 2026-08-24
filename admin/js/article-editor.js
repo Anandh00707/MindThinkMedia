@@ -98,6 +98,17 @@ document.addEventListener(
                 "articleContent"
             );
 
+        const insertArticleImageButton =
+            document.getElementById(
+                "insertArticleImageButton"
+            );
+
+
+        const articleInlineImageInput =
+            document.getElementById(
+                "articleInlineImageInput"
+            );
+
 
         const seoTitleInput =
             document.getElementById(
@@ -537,6 +548,210 @@ document.addEventListener(
             contentInput
         );
 
+        /* =====================================================
+   INLINE ARTICLE IMAGE
+===================================================== */
+
+        let inlineImageInsertPosition =
+            null;
+
+
+        if (
+            insertArticleImageButton &&
+            articleInlineImageInput &&
+            contentInput
+        ) {
+
+            insertArticleImageButton.addEventListener(
+                "click",
+                () => {
+
+                    inlineImageInsertPosition =
+                        contentInput.selectionStart;
+
+                    articleInlineImageInput.click();
+
+                }
+            );
+
+
+            articleInlineImageInput.addEventListener(
+                "change",
+                async () => {
+
+                    const file =
+                        articleInlineImageInput
+                            .files?.[0];
+
+
+                    if (!file) {
+
+                        return;
+                    }
+
+
+                    clearMessage(
+                        editorMessage
+                    );
+
+
+                    const validationError =
+                        validateImageFile(
+                            file
+                        );
+
+
+                    if (validationError) {
+
+                        articleInlineImageInput.value =
+                            "";
+
+
+                        showMessage(
+                            editorMessage,
+                            validationError,
+                            "error"
+                        );
+
+
+                        return;
+                    }
+
+
+                    try {
+
+                        imageUploadInProgress =
+                            true;
+
+
+                        insertArticleImageButton.disabled =
+                            true;
+
+
+                        setEditorButtonsDisabled(
+                            true,
+                            saveDraftButton,
+                            publishButton
+                        );
+
+
+                        showMessage(
+                            editorMessage,
+                            "Uploading article image...",
+                            "info"
+                        );
+
+
+                        const uploadedImage =
+                            await uploadFeaturedImage(
+                                file
+                            );
+
+
+                        const altText =
+                            window.prompt(
+                                "Image alt text:",
+                                createImageAltFromFilename(
+                                    file.name
+                                )
+                            );
+
+
+                        if (altText === null) {
+
+                            showMessage(
+                                editorMessage,
+                                "Image uploaded, but insertion was cancelled.",
+                                "info"
+                            );
+
+                            return;
+                        }
+
+
+                        const caption =
+                            window.prompt(
+                                "Optional image caption:",
+                                ""
+                            );
+
+
+                        if (caption === null) {
+
+                            showMessage(
+                                editorMessage,
+                                "Image uploaded, but insertion was cancelled.",
+                                "info"
+                            );
+
+                            return;
+                        }
+
+
+                        insertInlineArticleImage(
+                                contentInput,
+                                createBackendImageUrl(
+                                    uploadedImage.url
+                                 ),
+                                altText.trim(),
+                                caption.trim(),
+                                inlineImageInsertPosition
+                        );
+
+
+                        showMessage(
+                            editorMessage,
+                            "Article image inserted successfully.",
+                            "success"
+                        );
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Inline image upload failed:",
+                            error
+                        );
+
+
+                        showMessage(
+                            editorMessage,
+                            error.message ||
+                            "Failed to upload article image.",
+                            "error"
+                        );
+
+
+                    } finally {
+
+                        imageUploadInProgress =
+                            false;
+
+
+                        insertArticleImageButton.disabled =
+                            false;
+
+
+                        articleInlineImageInput.value =
+                            "";
+
+
+                        inlineImageInsertPosition =
+                            null;
+
+
+                        setEditorButtonsDisabled(
+                            false,
+                            saveDraftButton,
+                            publishButton
+                        );
+
+                    }
+
+                }
+            );
+
+        }
 
         /* =====================================================
            FEATURED IMAGE UPLOAD
@@ -1592,7 +1807,7 @@ async function submitArticle({
 
         setStatus(
             savedArticle.status ===
-            "published"
+                "published"
                 ? "published"
                 : "draft",
             statusInput,
@@ -2346,6 +2561,152 @@ function setupEditorToolbar(
 
 }
 
+/* =========================================================
+   INSERT INLINE ARTICLE IMAGE
+========================================================= */
+
+function insertInlineArticleImage(
+    textarea,
+    imageUrl,
+    altText,
+    caption,
+    position
+) {
+
+    if (
+        !textarea ||
+        !imageUrl
+    ) {
+
+        return;
+    }
+
+
+    const safeAlt =
+        escapeHtml(
+            altText ||
+            "Article image"
+        );
+
+
+    const safeCaption =
+        escapeHtml(
+            caption || ""
+        );
+
+
+    const safeImageUrl =
+        escapeHtml(
+            imageUrl
+        );
+
+
+    let imageHtml =
+`<figure class="article-inline-image">
+    <img
+        src="${safeImageUrl}"
+        alt="${safeAlt}"
+        loading="lazy"
+    >`;
+
+
+    if (safeCaption) {
+
+        imageHtml +=
+`
+    <figcaption>
+        ${safeCaption}
+    </figcaption>`;
+
+    }
+
+
+    imageHtml +=
+`
+</figure>`;
+
+
+    const insertPosition =
+        Number.isInteger(position)
+            ? position
+            : textarea.selectionStart;
+
+
+    const prefix =
+        insertPosition > 0 &&
+        textarea.value[
+            insertPosition - 1
+        ] !== "\n"
+            ? "\n\n"
+            : "";
+
+
+    const suffix =
+        "\n\n";
+
+
+    const finalHtml =
+        prefix +
+        imageHtml +
+        suffix;
+
+
+    textarea.setRangeText(
+        finalHtml,
+        insertPosition,
+        insertPosition,
+        "end"
+    );
+
+
+    textarea.focus();
+
+
+    textarea.dispatchEvent(
+        new Event(
+            "input",
+            {
+                bubbles: true
+            }
+        )
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(
+    value
+) {
+
+    return String(
+        value || ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
 
 /* =========================================================
    APPLY EDITOR TAG
@@ -2434,7 +2795,7 @@ function applyEditorTag(
         case "ul":
 
             replacement =
-`<ul>
+                `<ul>
     <li>${selectedText || "List item"}</li>
 </ul>`;
 
@@ -2519,7 +2880,7 @@ function applyEditorBlock(
     if (block === "takeaway") {
 
         replacement =
-`<div class="article-callout">
+            `<div class="article-callout">
     <div class="article-callout-title">
         Key Takeaway
     </div>
@@ -2537,7 +2898,7 @@ function applyEditorBlock(
     else if (block === "note") {
 
         replacement =
-`<div class="article-note">
+            `<div class="article-note">
     <strong>Important Note</strong>
 
     <p>${selectedText || "Write the important note here."}</p>
@@ -2563,14 +2924,14 @@ function applyEditorBlock(
 
     const prefix =
         start > 0 &&
-        textarea.value[start - 1] !== "\n"
+            textarea.value[start - 1] !== "\n"
             ? "\n\n"
             : "";
 
 
     const suffix =
         end < textarea.value.length &&
-        textarea.value[end] !== "\n"
+            textarea.value[end] !== "\n"
             ? "\n\n"
             : "";
 

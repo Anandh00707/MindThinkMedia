@@ -15,7 +15,9 @@
         content="noindex, nofollow"
     >
 
-    <title>Dashboard — MindThinkMedia</title>
+    <title>
+        Dashboard — MindThinkMedia
+    </title>
 
     <link
         rel="stylesheet"
@@ -27,9 +29,10 @@
 
 <body class="admin-dashboard-page">
 
-    <!-- ========================================================
+
+    <!-- =====================================================
          ADMIN HEADER
-         ======================================================== -->
+    ====================================================== -->
 
     <header class="admin-header">
 
@@ -47,14 +50,14 @@
                     M
                 </span>
 
-                <span>
+                <span class="admin-brand-copy">
 
                     <strong>
                         MindThinkMedia
                     </strong>
 
                     <small>
-                        Admin
+                        Editorial Studio
                     </small>
 
                 </span>
@@ -64,12 +67,21 @@
 
             <div class="admin-header-actions">
 
-                <span
-                    id="adminEmail"
-                    class="admin-email"
-                >
-                    Loading...
-                </span>
+                <div class="admin-account">
+
+                    <span class="admin-account-label">
+                        Signed in as
+                    </span>
+
+                    <span
+                        id="adminEmail"
+                        class="admin-email"
+                    >
+                        Loading...
+                    </span>
+
+                </div>
+
 
                 <button
                     type="button"
@@ -86,30 +98,32 @@
     </header>
 
 
-    <!-- ========================================================
+    <!-- =====================================================
          MAIN
-         ======================================================== -->
+    ====================================================== -->
 
-    <main class="admin-main">
+    <main class="admin-main dashboard-main">
 
-        <!-- ====================================================
-             PAGE HEADER
-             ==================================================== -->
 
-        <section class="admin-page-header">
+        <!-- =================================================
+             HERO
+        ================================================== -->
 
-            <div>
+        <section class="dashboard-hero">
+
+            <div class="dashboard-hero-copy">
 
                 <p class="admin-eyebrow">
-                    CONTENT MANAGEMENT SYSTEM
+                    MINDTHINKMEDIA CMS
                 </p>
 
                 <h1>
-                    Dashboard
+                    Your editorial workspace.
                 </h1>
 
-                <p>
-                    Manage and publish your MindThinkMedia articles.
+                <p class="dashboard-hero-description">
+                    Write, manage and publish every MindThinkMedia
+                    story from one calm workspace.
                 </p>
 
             </div>
@@ -117,17 +131,21 @@
 
             <a
                 href="./article-editor.html"
-                class="primary-button"
+                class="primary-button dashboard-new-article"
             >
-                + New Article
+                <span aria-hidden="true">
+                    +
+                </span>
+
+                New Article
             </a>
 
         </section>
 
 
-        <!-- ====================================================
+        <!-- =================================================
              MESSAGE
-             ==================================================== -->
+        ================================================== -->
 
         <div
             id="dashboardMessage"
@@ -137,74 +155,106 @@
         ></div>
 
 
-        <!-- ====================================================
+        <!-- =================================================
              STATISTICS
-             ==================================================== -->
+        ================================================== -->
 
         <section
             class="dashboard-stats"
             aria-label="Article statistics"
         >
 
-            <article class="stat-card">
+            <article class="stat-card stat-card-total">
 
-                <div class="stat-card-label">
-                    Total Articles
-                </div>
+                <span class="stat-index">
+                    01
+                </span>
 
-                <div
-                    id="totalArticles"
-                    class="stat-card-value"
-                >
-                    0
-                </div>
+                <div>
 
-            </article>
+                    <div class="stat-card-label">
+                        Total Articles
+                    </div>
 
+                    <div
+                        id="totalArticles"
+                        class="stat-card-value"
+                    >
+                        0
+                    </div>
 
-            <article class="stat-card">
-
-                <div class="stat-card-label">
-                    Published
-                </div>
-
-                <div
-                    id="publishedArticles"
-                    class="stat-card-value"
-                >
-                    0
                 </div>
 
             </article>
 
 
-            <article class="stat-card">
+            <article class="stat-card stat-card-published">
 
-                <div class="stat-card-label">
-                    Drafts
-                </div>
+                <span class="stat-index">
+                    02
+                </span>
 
-                <div
-                    id="draftArticles"
-                    class="stat-card-value"
-                >
-                    0
+                <div>
+
+                    <div class="stat-card-label">
+                        Published
+                    </div>
+
+                    <div
+                        id="publishedArticles"
+                        class="stat-card-value"
+                    >
+                        0
+                    </div>
+
                 </div>
 
             </article>
 
 
-            <article class="stat-card">
+            <article class="stat-card stat-card-draft">
 
-                <div class="stat-card-label">
-                    Unpublished
+                <span class="stat-index">
+                    03
+                </span>
+
+                <div>
+
+                    <div class="stat-card-label">
+                        Drafts
+                    </div>
+
+                    <div
+                        id="draftArticles"
+                        class="stat-card-value"
+                    >
+                        0
+                    </div>
+
                 </div>
 
-                <div
-                    id="unpublishedArticles"
-                    class="stat-card-value"
-                >
-                    0
+            </article>
+
+
+            <article class="stat-card stat-card-unpublished">
+
+                <span class="stat-index">
+                    04
+                </span>
+
+                <div>
+
+                    <div class="stat-card-label">
+                        Unpublished
+                    </div>
+
+                    <div
+                        id="unpublishedArticles"
+                        class="stat-card-value"
+                    >
+                        0
+                    </div>
+
                 </div>
 
             </article>
@@ -212,9 +262,9 @@
         </section>
 
 
-        <!-- ====================================================
+        <!-- =================================================
              ARTICLE MANAGEMENT
-             ==================================================== -->
+        ================================================== -->
 
         <section class="articles-section">
 
@@ -222,13 +272,17 @@
 
                 <div>
 
+                    <p class="section-kicker">
+                        LIBRARY
+                    </p>
+
                     <h2>
                         Articles
                     </h2>
 
                     <p>
-                        Create, edit, publish, unpublish, or delete
-                        your articles.
+                        Edit drafts, manage published stories and
+                        keep your content library organised.
                     </p>
 
                 </div>
@@ -244,9 +298,9 @@
             </div>
 
 
-            <!-- ==================================================
+            <!-- =================================================
                  ARTICLE TABLE
-                 ================================================== -->
+            ================================================== -->
 
             <div class="table-container">
 
@@ -257,7 +311,7 @@
                         <tr>
 
                             <th>
-                                Title
+                                Article
                             </th>
 
                             <th>
@@ -302,12 +356,21 @@
 
         </section>
 
+
+        <footer class="dashboard-footer">
+
+            <span>
+                MindThinkMedia
+            </span>
+
+            <span>
+                Editorial CMS
+            </span>
+
+        </footer>
+
     </main>
 
-
-    <!-- ========================================================
-         DASHBOARD JAVASCRIPT
-         ======================================================== -->
 
     <script src="./js/dashboard.js"></script>
 
