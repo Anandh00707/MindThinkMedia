@@ -534,30 +534,45 @@
 }
 
 
-.article-content ul,
-.article-content ol {
+/* =========================================================
+   ARTICLE LISTS
+========================================================= */
+
+.article-content ul {
+    list-style: disc outside;
 
     margin:
         0
         0
         1.6rem;
 
-    padding-left: 1.4rem;
+    padding-left: 1.8rem;
+}
 
+
+.article-content ol {
+    list-style: decimal outside;
+
+    margin:
+        0
+        0
+        1.6rem;
+
+    padding-left: 1.8rem;
 }
 
 
 .article-content li {
+    display: list-item;
 
     margin-bottom: 0.7rem;
 
+    padding-left: 0.25rem;
 }
 
 
 .article-content li::marker {
-
     color: var(--spine-color);
-
 }
 
 
