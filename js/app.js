@@ -603,8 +603,8 @@ if ("IntersectionObserver" in window) {
     }
 
     /* =========================================================
-RENDER FEATURED ARTICLE
-========================================================= */
+     RENDER FEATURED ARTICLE
+    ========================================================= */
 
     function renderFeaturedArticle(article) {
 
@@ -627,19 +627,13 @@ RENDER FEATURED ARTICLE
 
         if (article.image) {
 
-            imageHTML = `
-            <img
-                src="${article.image}"
-                alt="${article.imageAlt || article.title}"
-                loading="eager"
-                style="
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    display: block;
-                "
-            >
-        `;
+        imageHTML = `
+        <img
+        src="${article.image}"
+        alt="${article.imageAlt || article.title}"
+        loading="eager"
+       >
+      `;
 
         } else {
 
