@@ -94,6 +94,15 @@ async function testDatabaseConnection() {
         "Database time:",
         result.rows[0].time
     );
+     
+    const roleResult = await pool.query(`
+        SELECT current_user, session_user
+    `);
+
+    console.log(
+      "Backend DB role:",
+       roleResult.rows[0]
+    );
 
 }
 
