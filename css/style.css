@@ -5844,9 +5844,8 @@ body.page-leaving .page-transition-mark {
 }
 
 /* Hide Netlify floating badge */
-#netlify-identity-widget,
-.netlify-badge,
-[data-netlify-badge],
-a[href*="netlify.com"] img {
+iframe[src*="netlify"],
+div[class*="netlify"],
+a[href*="netlify.com"] {
     display: none !important;
 }
