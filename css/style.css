@@ -5842,3 +5842,11 @@ body.page-leaving .page-transition-mark {
 
     border-color: rgba(225, 199, 156, 0.52);
 }
+
+/* Hide Netlify floating badge */
+#netlify-identity-widget,
+.netlify-badge,
+[data-netlify-badge],
+a[href*="netlify.com"] img {
+    display: none !important;
+}
